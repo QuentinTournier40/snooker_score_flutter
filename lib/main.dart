@@ -10,9 +10,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Snooker Score',
-        home: WelcomePage());
+        home: const WelcomePage(),
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+          inputDecorationTheme: InputDecorationTheme(
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 1, color: Color(0xFF53af57)),
+              borderRadius: BorderRadius.circular(100),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(width: 3, color: Color(0xFF53af57)),
+              borderRadius: BorderRadius.circular(100),
+            ),
+          ),
+        ));
   }
 }
