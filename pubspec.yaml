@@ -38,7 +38,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^3.0.1
   undo: ^1.4.0
-  full_screen_menu: ^1.0.0
 
 dev_dependencies:
   flutter_test:
