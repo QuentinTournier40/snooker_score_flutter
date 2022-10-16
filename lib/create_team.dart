@@ -182,18 +182,28 @@ class _CreateTeamState extends State<CreateTeam> {
                         delay: 1500,
                         child: ElevatedButton(
                             onPressed: () {
+                              ScaffoldMessenger.of(context).clearSnackBars();
                               if (_controllerEquipe1.text.isEmpty ||
                                   _controllerEquipe2.text.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        backgroundColor: Color(0xFFC23737),
+                                    SnackBar(
+                                        backgroundColor:
+                                            const Color(0xFFC23737),
                                         content: Text(
-                                            "Veuillez saisir le nom des équipes.")));
+                                          "Veuillez saisir le nom des équipes.",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: 22),
+                                        )));
                               } else {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const JeuView()));
+                                        builder: (context) => JeuView(
+                                            nomEquipe1: _controllerEquipe1.text,
+                                            nomEquipe2: _controllerEquipe2.text,
+                                            equipeJouantEnPremier: _equipe)));
                               }
                             },
                             style: ElevatedButton.styleFrom(
