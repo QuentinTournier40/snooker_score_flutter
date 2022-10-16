@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snooker_score/delayed_animation.dart';
+import 'package:undo/undo.dart';
 
 import 'create_team.dart';
 
@@ -28,6 +29,7 @@ class JeuView extends StatefulWidget {
 class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
+  late SimpleStack _simpleStackController;
   late Equipe equipe1;
   late Equipe equipe2;
   late Equipe equipeActive;
@@ -48,6 +50,13 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
       equipeActive = equipe2;
       equipeInactive = equipe1;
     }
+
+    _simpleStackController = SimpleStack<List<int>>(
+        [equipe1.score, equipe2.score], onUpdate: ((val) {
+      if (mounted) {
+        setState(() {});
+      }
+    }));
   }
 
   @override
@@ -58,6 +67,9 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    equipe1.score = _simpleStackController.state[0];
+    equipe2.score = _simpleStackController.state[1];
+
     return SafeArea(
         child: DelayedAnimation(
       delay: 500,
@@ -154,7 +166,13 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    Container(
+                      decoration: BoxDecoration(
+                          color: (equipeActive == equipe1)
+                              ? Colors.lightGreenAccent
+                              : Colors.transparent,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(50))),
                       width: 120,
                       child: Text(equipe1.score.toString(),
                           textAlign: TextAlign.center,
@@ -164,7 +182,13 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                     const SizedBox(
                       width: 50,
                     ),
-                    SizedBox(
+                    Container(
+                      decoration: BoxDecoration(
+                          color: (equipeActive == equipe2)
+                              ? Colors.lightGreenAccent
+                              : Colors.transparent,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(50))),
                       width: 120,
                       child: Text(equipe2.score.toString(),
                           textAlign: TextAlign.center,
@@ -189,6 +213,8 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                               onPressed: () {
                                 setState(() {
                                   equipeActive.score += 1;
+                                  _simpleStackController
+                                      .modify([equipe1.score, equipe2.score]);
                                 });
                               },
                               style: ElevatedButton.styleFrom(
@@ -205,20 +231,21 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                             margin: const EdgeInsets.all(16),
                             child: ElevatedButton(
                               onPressed: () {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.amber,
+                                        content: Text(
+                                          "Attention il faut remettre la boule",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: 16),
+                                        )));
                                 setState(() {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
                                   equipeActive.score += 2;
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.amber,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.black,
-                                                fontSize: 16),
-                                          )));
+                                  _simpleStackController
+                                      .modify([equipe1.score, equipe2.score]);
                                 });
                               },
                               style: ElevatedButton.styleFrom(
@@ -235,20 +262,21 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                             margin: const EdgeInsets.all(16),
                             child: ElevatedButton(
                               onPressed: () {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.green,
+                                        content: Text(
+                                          "Attention il faut remettre la boule",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: 16),
+                                        )));
                                 setState(() {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
                                   equipeActive.score += 3;
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.green,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.black,
-                                                fontSize: 16),
-                                          )));
+                                  _simpleStackController
+                                      .modify([equipe1.score, equipe2.score]);
                                 });
                               },
                               style: ElevatedButton.styleFrom(
@@ -265,20 +293,21 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                             margin: const EdgeInsets.all(16),
                             child: ElevatedButton(
                               onPressed: () {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.brown,
+                                        content: Text(
+                                          "Attention il faut remettre la boule",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.white,
+                                              fontSize: 16),
+                                        )));
                                 setState(() {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
                                   equipeActive.score += 4;
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.brown,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.white,
-                                                fontSize: 16),
-                                          )));
+                                  _simpleStackController
+                                      .modify([equipe1.score, equipe2.score]);
                                 });
                               },
                               style: ElevatedButton.styleFrom(
@@ -300,20 +329,21 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                             margin: const EdgeInsets.all(16),
                             child: ElevatedButton(
                               onPressed: () {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.indigo,
+                                        content: Text(
+                                          "Attention il faut remettre la boule",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.white,
+                                              fontSize: 16),
+                                        )));
                                 setState(() {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
                                   equipeActive.score += 5;
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.indigo,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.white,
-                                                fontSize: 16),
-                                          )));
+                                  _simpleStackController
+                                      .modify([equipe1.score, equipe2.score]);
                                 });
                               },
                               style: ElevatedButton.styleFrom(
@@ -330,20 +360,21 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                             margin: const EdgeInsets.all(16),
                             child: ElevatedButton(
                               onPressed: () {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.pinkAccent,
+                                        content: Text(
+                                          "Attention il faut remettre la boule",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: 16),
+                                        )));
                                 setState(() {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
                                   equipeActive.score += 6;
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.pinkAccent,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.black,
-                                                fontSize: 16),
-                                          )));
+                                  _simpleStackController
+                                      .modify([equipe1.score, equipe2.score]);
                                 });
                               },
                               style: ElevatedButton.styleFrom(
@@ -360,20 +391,21 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                             margin: const EdgeInsets.all(16),
                             child: ElevatedButton(
                               onPressed: () {
+                                ScaffoldMessenger.of(context).clearSnackBars();
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                        backgroundColor: Colors.black,
+                                        content: Text(
+                                          "Attention il faut remettre la boule",
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.white,
+                                              fontSize: 16),
+                                        )));
                                 setState(() {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
                                   equipeActive.score += 7;
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.black,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.white,
-                                                fontSize: 16),
-                                          )));
+                                  _simpleStackController
+                                      .modify([equipe1.score, equipe2.score]);
                                 });
                               },
                               style: ElevatedButton.styleFrom(
@@ -395,20 +427,22 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                             margin: const EdgeInsets.all(16),
                             child: ElevatedButton(
                                 onPressed: () {
+                                  ScaffoldMessenger.of(context)
+                                      .clearSnackBars();
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          backgroundColor: Colors.brown,
+                                          content: Text(
+                                            "Attention il faut remettre la boule si c'est une couleur",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          )));
                                   setState(() {
-                                    ScaffoldMessenger.of(context)
-                                        .clearSnackBars();
                                     equipeInactive.score += 4;
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                            backgroundColor: Colors.brown,
-                                            content: Text(
-                                              "Attention il faut remettre la boule si c'est une couleur",
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
-                                                  color: Colors.white,
-                                                  fontSize: 16),
-                                            )));
+                                    _simpleStackController
+                                        .modify([equipe1.score, equipe2.score]);
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -427,20 +461,22 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                             margin: const EdgeInsets.all(16),
                             child: ElevatedButton(
                                 onPressed: () {
+                                  ScaffoldMessenger.of(context)
+                                      .clearSnackBars();
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          backgroundColor: Colors.indigo,
+                                          content: Text(
+                                            "Attention il faut remettre la boule",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          )));
                                   setState(() {
-                                    ScaffoldMessenger.of(context)
-                                        .clearSnackBars();
                                     equipeInactive.score += 5;
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                            backgroundColor: Colors.indigo,
-                                            content: Text(
-                                              "Attention il faut remettre la boule",
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
-                                                  color: Colors.white,
-                                                  fontSize: 16),
-                                            )));
+                                    _simpleStackController
+                                        .modify([equipe1.score, equipe2.score]);
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -459,20 +495,22 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                             margin: const EdgeInsets.all(16),
                             child: ElevatedButton(
                                 onPressed: () {
+                                  ScaffoldMessenger.of(context)
+                                      .clearSnackBars();
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          backgroundColor: Colors.pinkAccent,
+                                          content: Text(
+                                            "Attention il faut remettre la boule",
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.poppins(
+                                                color: Colors.black,
+                                                fontSize: 16),
+                                          )));
                                   setState(() {
-                                    ScaffoldMessenger.of(context)
-                                        .clearSnackBars();
                                     equipeInactive.score += 6;
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                            backgroundColor: Colors.pinkAccent,
-                                            content: Text(
-                                              "Attention il faut remettre la boule",
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
-                                                  color: Colors.black,
-                                                  fontSize: 16),
-                                            )));
+                                    _simpleStackController
+                                        .modify([equipe1.score, equipe2.score]);
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -488,13 +526,11 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                 )),
                           ),
                           Container(
-                            margin: const EdgeInsets.all(16),
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  setState(() {
+                              margin: const EdgeInsets.all(16),
+                              child: ElevatedButton(
+                                  onPressed: () {
                                     ScaffoldMessenger.of(context)
                                         .clearSnackBars();
-                                    equipeInactive.score += 7;
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
                                             backgroundColor: Colors.black,
@@ -505,20 +541,22 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                                   color: Colors.white,
                                                   fontSize: 16),
                                             )));
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black,
-                                  shape: const CircleBorder(),
-                                  padding: const EdgeInsets.all(13),
-                                ),
-                                child: Text(
-                                  "-7",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                      color: Colors.white, fontSize: 22),
-                                )),
-                          )
+
+                                    setState(() {
+                                      equipeInactive.score += 7;
+                                      _simpleStackController.modify(
+                                          [equipe1.score, equipe2.score]);
+                                    });
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.black,
+                                    shape: const CircleBorder(),
+                                    padding: const EdgeInsets.all(13),
+                                  ),
+                                  child: Text("-7",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.white, fontSize: 22))))
                         ],
                       ),
                       const SizedBox(
@@ -527,6 +565,29 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          IconButton(
+                            onPressed: () {
+                              if (mounted) {
+                                setState(() {
+                                  ScaffoldMessenger.of(context)
+                                      .clearSnackBars();
+                                  _simpleStackController.undo();
+                                });
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF53af57),
+                              shape: const StadiumBorder(),
+                              padding: const EdgeInsets.all(13),
+                            ),
+                            icon: const Icon(
+                              Icons.undo,
+                              size: 35,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 35,
+                          ),
                           ElevatedButton(
                               onPressed: () {
                                 setState(() {
@@ -540,7 +601,7 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                 });
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF53af57),
+                                backgroundColor: Colors.orange,
                                 shape: const StadiumBorder(),
                                 padding: const EdgeInsets.all(13),
                               ),
@@ -548,7 +609,7 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                 "Fin de tour",
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.poppins(
-                                    color: Colors.black, fontSize: 22),
+                                    color: Colors.white, fontSize: 22),
                               ))
                         ],
                       ),
