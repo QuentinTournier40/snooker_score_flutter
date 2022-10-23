@@ -397,6 +397,13 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                                 )));
                                         setState(() {
                                           equipeInactive.score += 4;
+                                          if (equipeActive == equipe1) {
+                                            equipeActive = equipe2;
+                                            equipeInactive = equipe1;
+                                          } else {
+                                            equipeActive = equipe1;
+                                            equipeInactive = equipe2;
+                                          }
                                           _simpleStackController.modify(
                                               [equipe1.score, equipe2.score]);
                                         });
@@ -431,6 +438,13 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                                 )));
                                         setState(() {
                                           equipeInactive.score += 5;
+                                          if (equipeActive == equipe1) {
+                                            equipeActive = equipe2;
+                                            equipeInactive = equipe1;
+                                          } else {
+                                            equipeActive = equipe1;
+                                            equipeInactive = equipe2;
+                                          }
                                           _simpleStackController.modify(
                                               [equipe1.score, equipe2.score]);
                                         });
@@ -466,6 +480,13 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                                 )));
                                         setState(() {
                                           equipeInactive.score += 6;
+                                          if (equipeActive == equipe1) {
+                                            equipeActive = equipe2;
+                                            equipeInactive = equipe1;
+                                          } else {
+                                            equipeActive = equipe1;
+                                            equipeInactive = equipe2;
+                                          }
                                           _simpleStackController.modify(
                                               [equipe1.score, equipe2.score]);
                                         });
@@ -482,39 +503,43 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                             color: Colors.black, fontSize: 22),
                                       )),
                                 ),
-                                Container(
-                                    margin: const EdgeInsets.all(16),
-                                    child: ElevatedButton(
-                                        onPressed: () {
-                                          ScaffoldMessenger.of(context)
-                                              .clearSnackBars();
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                                  backgroundColor: Colors.black,
-                                                  content: Text(
-                                                    "Attention il faut remettre la boule",
-                                                    textAlign: TextAlign.center,
-                                                    style: GoogleFonts.poppins(
-                                                        color: Colors.white,
-                                                        fontSize: 22),
-                                                  )));
+                                ElevatedButton(
+                                    onPressed: () {
+                                      ScaffoldMessenger.of(context)
+                                          .clearSnackBars();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              backgroundColor: Colors.black,
+                                              content: Text(
+                                                "Attention il faut remettre la boule",
+                                                textAlign: TextAlign.center,
+                                                style: GoogleFonts.poppins(
+                                                    color: Colors.white,
+                                                    fontSize: 22),
+                                              )));
 
-                                          setState(() {
-                                            equipeInactive.score += 7;
-                                            _simpleStackController.modify(
-                                                [equipe1.score, equipe2.score]);
-                                          });
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.black,
-                                          shape: const CircleBorder(),
-                                          padding: const EdgeInsets.all(13),
-                                        ),
-                                        child: Text("-7",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.white,
-                                                fontSize: 22))))
+                                      setState(() {
+                                        equipeInactive.score += 7;
+                                        if (equipeActive == equipe1) {
+                                          equipeActive = equipe2;
+                                          equipeInactive = equipe1;
+                                        } else {
+                                          equipeActive = equipe1;
+                                          equipeInactive = equipe2;
+                                        }
+                                        _simpleStackController.modify(
+                                            [equipe1.score, equipe2.score]);
+                                      });
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.black,
+                                      shape: const CircleBorder(),
+                                      padding: const EdgeInsets.all(13),
+                                    ),
+                                    child: Text("-7",
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.white, fontSize: 22)))
                               ],
                             ),
                             const SizedBox(
@@ -564,61 +589,59 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                       style: GoogleFonts.poppins(
                                           color: Colors.white, fontSize: 22),
                                     )),
+                                const SizedBox(
+                                  width: 35,
+                                ),
                                 IconButton(
-                                  padding: const EdgeInsets.only(left: 20),
                                   onPressed: () {
-                                    (() {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                                title: Text(
-                                                  "Attention",
-                                                  style: GoogleFonts.poppins(
-                                                      color: Colors.red,
-                                                      fontSize: 22),
-                                                ),
-                                                content: Text(
-                                                  "Une partie est en cours, êtes vous sûr de vouloir en démarer une nouvelle ?",
-                                                  style: GoogleFonts.poppins(
-                                                      color: Colors.black,
-                                                      fontSize: 18),
-                                                ),
-                                                actions: [
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .clearSnackBars();
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const CreateTeam()));
-                                                      },
-                                                      child: Text(
-                                                        "OUI",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                color:
-                                                                    Colors.red,
-                                                                fontSize: 20),
-                                                      )),
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Text(
-                                                        "NON",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                                color: Colors
-                                                                    .green,
-                                                                fontSize: 20),
-                                                      )),
-                                                ],
-                                              ));
-                                    });
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                              title: Text(
+                                                "Attention",
+                                                style: GoogleFonts.poppins(
+                                                    color: Colors.red,
+                                                    fontSize: 22),
+                                              ),
+                                              content: Text(
+                                                "Une partie est en cours, êtes vous sûr de vouloir en démarer une nouvelle ?",
+                                                style: GoogleFonts.poppins(
+                                                    color: Colors.black,
+                                                    fontSize: 18),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .clearSnackBars();
+                                                      Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const CreateTeam()));
+                                                    },
+                                                    child: Text(
+                                                      "OUI",
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              color: Colors.red,
+                                                              fontSize: 20),
+                                                    )),
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text(
+                                                      "NON",
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              color:
+                                                                  Colors.green,
+                                                              fontSize: 20),
+                                                    )),
+                                              ],
+                                            ));
                                   },
                                   icon: const Icon(
                                     Icons.refresh,
