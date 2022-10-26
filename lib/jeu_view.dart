@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snooker_score/delayed_animation.dart';
+import 'package:snooker_score/widget_jeu/boule_billar_blouse_widget.dart';
 import 'package:undo/undo.dart';
+import 'package:snooker_score/widget_jeu/boule_billard_empoche_widget.dart';
 
 import 'create_team.dart';
 
@@ -178,368 +180,106 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                 ),
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.all(16),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.amber,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.black,
-                                                fontSize: 22),
-                                          )));
-                                  setState(() {
-                                    equipeActive.score += 2;
-                                    _simpleStackController
-                                        .modify([equipe1.score, equipe2.score]);
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.amber,
-                                  shape: const CircleBorder(),
-                                  padding: const EdgeInsets.all(13),
-                                ),
-                                child: Container(
-                                  height: 75,
-                                ),
-                              ),
+                            BouleBillardEmpoche(
+                              color: Colors.amber,
+                              scoreBalle: 2,
+                              equipeActive: equipeActive,
+                              equipe1: equipe1,
+                              equipe2: equipe2,
+                              stack: _simpleStackController,
+                              textColor: Colors.black,
                             ),
-                            Container(
-                              margin: const EdgeInsets.all(16),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.green,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.black,
-                                                fontSize: 22),
-                                          )));
-                                  setState(() {
-                                    equipeActive.score += 3;
-                                    _simpleStackController
-                                        .modify([equipe1.score, equipe2.score]);
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green,
-                                  shape: const CircleBorder(),
-                                  padding: const EdgeInsets.all(13),
-                                ),
-                                child: Container(
-                                  height: 75,
-                                ),
-                              ),
+                            BouleBillardEmpoche(
+                              color: Colors.green,
+                              scoreBalle: 3,
+                              equipeActive: equipeActive,
+                              equipe1: equipe1,
+                              equipe2: equipe2,
+                              stack: _simpleStackController,
+                              textColor: Colors.black,
                             ),
-                            Container(
-                              margin: const EdgeInsets.all(16),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.brown,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.white,
-                                                fontSize: 22),
-                                          )));
-                                  setState(() {
-                                    equipeActive.score += 4;
-                                    _simpleStackController
-                                        .modify([equipe1.score, equipe2.score]);
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.brown,
-                                  shape: const CircleBorder(),
-                                  padding: const EdgeInsets.all(13),
-                                ),
-                                child: Container(
-                                  height: 75,
-                                ),
-                              ),
+                            BouleBillardEmpoche(
+                              color: Colors.brown,
+                              scoreBalle: 4,
+                              equipeActive: equipeActive,
+                              equipe1: equipe1,
+                              equipe2: equipe2,
+                              stack: _simpleStackController,
+                              textColor: Colors.black,
                             ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Container(
-                              margin: const EdgeInsets.all(16),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.indigo,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.white,
-                                                fontSize: 22),
-                                          )));
-                                  setState(() {
-                                    equipeActive.score += 5;
-                                    _simpleStackController
-                                        .modify([equipe1.score, equipe2.score]);
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.indigo,
-                                  shape: const CircleBorder(),
-                                  padding: const EdgeInsets.all(13),
-                                ),
-                                child: Container(
-                                  height: 75,
-                                ),
-                              ),
+                            BouleBillardEmpoche(
+                              color: Colors.indigo,
+                              scoreBalle: 5,
+                              equipeActive: equipeActive,
+                              equipe1: equipe1,
+                              equipe2: equipe2,
+                              stack: _simpleStackController,
+                              textColor: Colors.white,
                             ),
-                            Container(
-                              margin: const EdgeInsets.all(16),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.pinkAccent,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.black,
-                                                fontSize: 22),
-                                          )));
-                                  setState(() {
-                                    equipeActive.score += 6;
-                                    _simpleStackController
-                                        .modify([equipe1.score, equipe2.score]);
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.pinkAccent,
-                                  shape: const CircleBorder(),
-                                  padding: const EdgeInsets.all(13),
-                                ),
-                                child: Container(
-                                  height: 75,
-                                ),
-                              ),
+                            BouleBillardEmpoche(
+                              color: Colors.pinkAccent,
+                              scoreBalle: 6,
+                              equipeActive: equipeActive,
+                              equipe1: equipe1,
+                              equipe2: equipe2,
+                              stack: _simpleStackController,
+                              textColor: Colors.black,
                             ),
-                            Container(
-                              margin: const EdgeInsets.all(16),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.black,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.white,
-                                                fontSize: 22),
-                                          )));
-                                  setState(() {
-                                    equipeActive.score += 7;
-                                    _simpleStackController
-                                        .modify([equipe1.score, equipe2.score]);
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black,
-                                  shape: const CircleBorder(),
-                                  padding: const EdgeInsets.all(13),
-                                ),
-                                child: Container(
-                                  height: 75,
-                                ),
-                              ),
+                            BouleBillardEmpoche(
+                              color: Colors.black,
+                              scoreBalle: 7,
+                              equipeActive: equipeActive,
+                              equipe1: equipe1,
+                              equipe2: equipe2,
+                              stack: _simpleStackController,
+                              textColor: Colors.white,
                             )
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Container(
-                              margin: const EdgeInsets.all(16),
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    ScaffoldMessenger.of(context)
-                                        .clearSnackBars();
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                            backgroundColor: Colors.brown,
-                                            content: Text(
-                                              "Attention il faut remettre la boule si c'est une couleur",
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
-                                                  color: Colors.white,
-                                                  fontSize: 16),
-                                            )));
-                                    setState(() {
-                                      equipeInactive.score += 4;
-                                      if (equipeActive == equipe1) {
-                                        equipeActive = equipe2;
-                                        equipeInactive = equipe1;
-                                      } else {
-                                        equipeActive = equipe1;
-                                        equipeInactive = equipe2;
-                                      }
-                                      _simpleStackController.modify(
-                                          [equipe1.score, equipe2.score]);
-                                    });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    shape: const CircleBorder(),
-                                    padding: const EdgeInsets.all(13),
-                                  ),
-                                  child: Text(
-                                    "-4",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        color: Colors.black, fontSize: 22),
-                                  )),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.all(16),
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    ScaffoldMessenger.of(context)
-                                        .clearSnackBars();
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                            backgroundColor: Colors.indigo,
-                                            content: Text(
-                                              "Attention il faut remettre la boule",
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
-                                                  color: Colors.white,
-                                                  fontSize: 22),
-                                            )));
-                                    setState(() {
-                                      equipeInactive.score += 5;
-                                      if (equipeActive == equipe1) {
-                                        equipeActive = equipe2;
-                                        equipeInactive = equipe1;
-                                      } else {
-                                        equipeActive = equipe1;
-                                        equipeInactive = equipe2;
-                                      }
-                                      _simpleStackController.modify(
-                                          [equipe1.score, equipe2.score]);
-                                    });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.indigo,
-                                    shape: const CircleBorder(),
-                                    padding: const EdgeInsets.all(13),
-                                  ),
-                                  child: Text(
-                                    "-5",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        color: Colors.white, fontSize: 22),
-                                  )),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.all(16),
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    ScaffoldMessenger.of(context)
-                                        .clearSnackBars();
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                            backgroundColor: Colors.pinkAccent,
-                                            content: Text(
-                                              "Attention il faut remettre la boule",
-                                              textAlign: TextAlign.center,
-                                              style: GoogleFonts.poppins(
-                                                  color: Colors.black,
-                                                  fontSize: 22),
-                                            )));
-                                    setState(() {
-                                      equipeInactive.score += 6;
-                                      if (equipeActive == equipe1) {
-                                        equipeActive = equipe2;
-                                        equipeInactive = equipe1;
-                                      } else {
-                                        equipeActive = equipe1;
-                                        equipeInactive = equipe2;
-                                      }
-                                      _simpleStackController.modify(
-                                          [equipe1.score, equipe2.score]);
-                                    });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.pinkAccent,
-                                    shape: const CircleBorder(),
-                                    padding: const EdgeInsets.all(13),
-                                  ),
-                                  child: Text(
-                                    "-6",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        color: Colors.black, fontSize: 22),
-                                  )),
-                            ),
-                            ElevatedButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context)
-                                      .clearSnackBars();
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          backgroundColor: Colors.black,
-                                          content: Text(
-                                            "Attention il faut remettre la boule",
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.white,
-                                                fontSize: 22),
-                                          )));
-
-                                  setState(() {
-                                    equipeInactive.score += 7;
-                                    if (equipeActive == equipe1) {
-                                      equipeActive = equipe2;
-                                      equipeInactive = equipe1;
-                                    } else {
-                                      equipeActive = equipe1;
-                                      equipeInactive = equipe2;
-                                    }
-                                    _simpleStackController
-                                        .modify([equipe1.score, equipe2.score]);
-                                  });
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black,
-                                  shape: const CircleBorder(),
-                                  padding: const EdgeInsets.all(13),
-                                ),
-                                child: Text("-7",
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        color: Colors.white, fontSize: 22)))
+                            BouleBillardBlouse(
+                                color: Colors.brown,
+                                scoreBoule: 4,
+                                equipe1: equipe1,
+                                equipe2: equipe2,
+                                equipeActive: equipeActive,
+                                equipeInactive: equipeInactive,
+                                textColor: Colors.white,
+                                stack: _simpleStackController),
+                            BouleBillardBlouse(
+                                color: Colors.indigo,
+                                scoreBoule: 5,
+                                equipe1: equipe1,
+                                equipe2: equipe2,
+                                equipeActive: equipeActive,
+                                equipeInactive: equipeInactive,
+                                textColor: Colors.white,
+                                stack: _simpleStackController),
+                            BouleBillardBlouse(
+                                color: Colors.pinkAccent,
+                                scoreBoule: 6,
+                                equipe1: equipe1,
+                                equipe2: equipe2,
+                                equipeActive: equipeActive,
+                                equipeInactive: equipeInactive,
+                                textColor: Colors.black,
+                                stack: _simpleStackController),
+                            BouleBillardBlouse(
+                                color: Colors.black,
+                                scoreBoule: 7,
+                                equipe1: equipe1,
+                                equipe2: equipe2,
+                                equipeActive: equipeActive,
+                                equipeInactive: equipeInactive,
+                                textColor: Colors.white,
+                                stack: _simpleStackController),
                           ],
                         ),
                         Row(
