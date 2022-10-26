@@ -21,12 +21,18 @@ class _CreateTeamState extends State<CreateTeam> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    var padding = MediaQuery.of(context).padding;
+    double newheight = height - padding.top - padding.bottom;
+
     return SafeArea(
       child: Scaffold(
           body: Center(
         child: SingleChildScrollView(
           child: Container(
-            width: double.infinity,
+            width: width,
             height: 600,
             margin: const EdgeInsets.symmetric(vertical: 60, horizontal: 15),
             child: Column(
@@ -48,7 +54,7 @@ class _CreateTeamState extends State<CreateTeam> {
                 ),
                 const Spacer(),
                 SizedBox(
-                  height: 200,
+                  height: newheight * 0.2,
                   child: DelayedAnimation(
                     delay: 600,
                     offsetFinal: -1,
@@ -67,7 +73,7 @@ class _CreateTeamState extends State<CreateTeam> {
                                 ),
                               ),
                               SizedBox(
-                                width: 150,
+                                width: width * 0.4,
                                 child: TextField(
                                   controller: _controllerEquipe1,
                                   decoration: const InputDecoration(
@@ -98,7 +104,7 @@ class _CreateTeamState extends State<CreateTeam> {
                                 ),
                               ),
                               SizedBox(
-                                  width: 150,
+                                  width: width * 0.4,
                                   child: TextField(
                                     controller: _controllerEquipe2,
                                     decoration: const InputDecoration(
@@ -116,7 +122,7 @@ class _CreateTeamState extends State<CreateTeam> {
                     offsetFinal: -1,
                     delay: 900,
                     child: SizedBox(
-                      width: 300,
+                      width: width,
                       child: Text(
                         "Quelle est l'équipe qui commence la partie ?",
                         textAlign: TextAlign.center,
@@ -127,7 +133,7 @@ class _CreateTeamState extends State<CreateTeam> {
                   ),
                 ),
                 SizedBox(
-                  height: 100,
+                  height: newheight * 0.1,
                   child: DelayedAnimation(
                     delay: 1200,
                     offsetFinal: -1,
@@ -135,7 +141,7 @@ class _CreateTeamState extends State<CreateTeam> {
                       alignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: 160,
+                          width: width * 0.4,
                           child: RadioListTile(
                             title: Text(
                               "Équipe 1",
@@ -153,7 +159,7 @@ class _CreateTeamState extends State<CreateTeam> {
                           ),
                         ),
                         SizedBox(
-                          width: 160,
+                          width: width * 0.4,
                           child: RadioListTile(
                             title: Text(
                               "Équipe 2",
@@ -176,7 +182,7 @@ class _CreateTeamState extends State<CreateTeam> {
                 ),
                 Container(
                     padding: const EdgeInsets.all(25),
-                    width: double.infinity,
+                    width: width,
                     child: DelayedAnimation(
                         offsetFinal: -1,
                         delay: 1500,

@@ -8,6 +8,8 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -42,7 +44,7 @@ class WelcomePage extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.all(25),
-                width: double.infinity,
+                width: width,
                 child: DelayedAnimation(
                     offsetFinal: -1,
                     delay: 2250,
