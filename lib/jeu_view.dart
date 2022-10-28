@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:snooker_score/delayed_animation.dart';
 import 'package:snooker_score/widget_jeu/affichage_points_widget.dart';
 import 'package:snooker_score/widget_jeu/boule_billar_blouse_widget.dart';
+import 'package:snooker_score/widget_jeu/popup_restart_widget.dart';
 import 'package:undo/undo.dart';
 import 'package:snooker_score/widget_jeu/boule_billard_empoche_widget.dart';
 
@@ -326,6 +327,9 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: height * 0.05,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -371,48 +375,7 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                               onPressed: () {
                                 showDialog(
                                     context: context,
-                                    builder: (context) => AlertDialog(
-                                          title: Text(
-                                            "Attention",
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.red,
-                                                fontSize: 22),
-                                          ),
-                                          content: Text(
-                                            "Une partie est en cours, êtes vous sûr de vouloir en démarer une nouvelle ?",
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.black,
-                                                fontSize: 18),
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                                onPressed: () {
-                                                  ScaffoldMessenger.of(context)
-                                                      .clearSnackBars();
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const CreateTeam()));
-                                                },
-                                                child: Text(
-                                                  "OUI",
-                                                  style: GoogleFonts.poppins(
-                                                      color: Colors.red,
-                                                      fontSize: 20),
-                                                )),
-                                            TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Text(
-                                                  "NON",
-                                                  style: GoogleFonts.poppins(
-                                                      color: Colors.green,
-                                                      fontSize: 20),
-                                                )),
-                                          ],
-                                        ));
+                                    builder: (context) => const PopupRestart());
                               },
                               icon: const Icon(
                                 Icons.refresh,
