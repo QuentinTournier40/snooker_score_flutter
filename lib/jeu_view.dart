@@ -123,16 +123,36 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AffichagePoints(
-                          equipe: equipe1,
-                          equipeActive: equipeActive,
-                          width: width),
+                        mainEquipe: equipe1,
+                        equipeActive: equipeActive,
+                        width: width,
+                        equipe2: equipe2,
+                        equipeInactive: equipeInactive,
+                        onTap:
+                            (equipe1, equipe2, equipeActive, equipeInactive) {
+                          setState(() {
+                            this.equipeActive = this.equipe1;
+                            this.equipeInactive = this.equipe2;
+                          });
+                        },
+                      ),
                       SizedBox(
                         width: width * 0.2,
                       ),
                       AffichagePoints(
-                          equipe: equipe2,
-                          equipeActive: equipeActive,
-                          width: width),
+                        mainEquipe: equipe2,
+                        equipeActive: equipeActive,
+                        width: width,
+                        equipe2: equipe1,
+                        equipeInactive: equipeInactive,
+                        onTap:
+                            (equipe1, equipe2, equipeActive, equipeInactive) {
+                          setState(() {
+                            this.equipeActive = this.equipe2;
+                            this.equipeInactive = this.equipe1;
+                          });
+                        },
+                      ),
                     ],
                   ),
                   SizedBox(
