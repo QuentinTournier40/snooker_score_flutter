@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:snooker_score/delayed_animation.dart';
+import 'package:snooker_score/widget_jeu/affichage_points_widget.dart';
 import 'package:snooker_score/widget_jeu/boule_billar_blouse_widget.dart';
 import 'package:undo/undo.dart';
 import 'package:snooker_score/widget_jeu/boule_billard_empoche_widget.dart';
@@ -20,7 +21,8 @@ class JeuView extends StatefulWidget {
   final EQUIPES? equipeJouantEnPremier;
 
   const JeuView(
-      {required this.equipeJouantEnPremier,
+      {super.key,
+      required this.equipeJouantEnPremier,
       required this.nomEquipe1,
       required this.nomEquipe2});
 
@@ -119,35 +121,17 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: (equipeActive == equipe1)
-                                ? Colors.lightGreenAccent
-                                : Colors.transparent,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(50))),
-                        width: width * 0.35,
-                        child: Text(equipe1.score.toString(),
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
-                                color: Colors.black, fontSize: 50)),
-                      ),
+                      AffichagePoints(
+                          equipe: equipe1,
+                          equipeActive: equipeActive,
+                          width: width),
                       SizedBox(
                         width: width * 0.2,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: (equipeActive == equipe2)
-                                ? Colors.lightGreenAccent
-                                : Colors.transparent,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(50))),
-                        width: width * 0.35,
-                        child: Text(equipe2.score.toString(),
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.poppins(
-                                color: Colors.black, fontSize: 50)),
-                      )
+                      AffichagePoints(
+                          equipe: equipe2,
+                          equipeActive: equipeActive,
+                          width: width),
                     ],
                   ),
                   SizedBox(
@@ -245,41 +229,101 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             BouleBillardBlouse(
-                                color: Colors.brown,
-                                scoreBoule: 4,
-                                equipe1: equipe1,
-                                equipe2: equipe2,
-                                equipeActive: equipeActive,
-                                equipeInactive: equipeInactive,
-                                textColor: Colors.white,
-                                stack: _simpleStackController),
+                              color: Colors.brown,
+                              scoreBoule: 4,
+                              equipe1: equipe1,
+                              equipe2: equipe2,
+                              equipeActive: equipeActive,
+                              equipeInactive: equipeInactive,
+                              textColor: Colors.white,
+                              stack: _simpleStackController,
+                              onChange: (equipe1, equipe2, equipeActive,
+                                  equipeInactive) {
+                                setState(() {
+                                  if (this.equipeActive == this.equipe1) {
+                                    this.equipeActive = equipe2;
+                                    this.equipeInactive = equipe1;
+                                  } else {
+                                    this.equipeActive = this.equipe1;
+                                    this.equipeInactive = this.equipe2;
+                                  }
+                                });
+                              },
+                              textSnackBar:
+                                  "Attention il faut remettre la boule si c'est une couleur",
+                            ),
                             BouleBillardBlouse(
-                                color: Colors.indigo,
-                                scoreBoule: 5,
-                                equipe1: equipe1,
-                                equipe2: equipe2,
-                                equipeActive: equipeActive,
-                                equipeInactive: equipeInactive,
-                                textColor: Colors.white,
-                                stack: _simpleStackController),
+                              color: Colors.indigo,
+                              scoreBoule: 5,
+                              equipe1: equipe1,
+                              equipe2: equipe2,
+                              equipeActive: equipeActive,
+                              equipeInactive: equipeInactive,
+                              textColor: Colors.white,
+                              stack: _simpleStackController,
+                              onChange: (equipe1, equipe2, equipeActive,
+                                  equipeInactive) {
+                                setState(() {
+                                  if (this.equipeActive == this.equipe1) {
+                                    this.equipeActive = equipe2;
+                                    this.equipeInactive = equipe1;
+                                  } else {
+                                    this.equipeActive = this.equipe1;
+                                    this.equipeInactive = this.equipe2;
+                                  }
+                                });
+                              },
+                              textSnackBar:
+                                  "Attention il faut remettre la boule",
+                            ),
                             BouleBillardBlouse(
-                                color: Colors.pinkAccent,
-                                scoreBoule: 6,
-                                equipe1: equipe1,
-                                equipe2: equipe2,
-                                equipeActive: equipeActive,
-                                equipeInactive: equipeInactive,
-                                textColor: Colors.black,
-                                stack: _simpleStackController),
+                              color: Colors.pinkAccent,
+                              scoreBoule: 6,
+                              equipe1: equipe1,
+                              equipe2: equipe2,
+                              equipeActive: equipeActive,
+                              equipeInactive: equipeInactive,
+                              textColor: Colors.black,
+                              stack: _simpleStackController,
+                              onChange: (equipe1, equipe2, equipeActive,
+                                  equipeInactive) {
+                                setState(() {
+                                  if (this.equipeActive == equipe1) {
+                                    this.equipeActive = equipe2;
+                                    this.equipeInactive = equipe1;
+                                  } else {
+                                    this.equipeActive = equipe1;
+                                    this.equipeInactive = this.equipe2;
+                                  }
+                                });
+                              },
+                              textSnackBar:
+                                  "Attention il faut remettre la boule",
+                            ),
                             BouleBillardBlouse(
-                                color: Colors.black,
-                                scoreBoule: 7,
-                                equipe1: equipe1,
-                                equipe2: equipe2,
-                                equipeActive: equipeActive,
-                                equipeInactive: equipeInactive,
-                                textColor: Colors.white,
-                                stack: _simpleStackController),
+                              color: Colors.black,
+                              scoreBoule: 7,
+                              equipe1: equipe1,
+                              equipe2: equipe2,
+                              equipeActive: equipeActive,
+                              equipeInactive: equipeInactive,
+                              textColor: Colors.white,
+                              stack: _simpleStackController,
+                              onChange: (equipe1, equipe2, equipeActive,
+                                  equipeInactive) {
+                                setState(() {
+                                  if (this.equipeActive == this.equipe1) {
+                                    this.equipeActive = equipe2;
+                                    this.equipeInactive = equipe1;
+                                  } else {
+                                    this.equipeActive = this.equipe1;
+                                    this.equipeInactive = this.equipe2;
+                                  }
+                                });
+                              },
+                              textSnackBar:
+                                  "Attention il faut remettre la boule",
+                            ),
                           ],
                         ),
                         Row(
@@ -299,9 +343,6 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                 Icons.undo,
                                 size: 35,
                               ),
-                            ),
-                            const SizedBox(
-                              width: 35,
                             ),
                             ElevatedButton(
                                 onPressed: () {
@@ -326,9 +367,6 @@ class _JeuViewState extends State<JeuView> with SingleTickerProviderStateMixin {
                                   style: GoogleFonts.poppins(
                                       color: Colors.white, fontSize: 22),
                                 )),
-                            const SizedBox(
-                              width: 35,
-                            ),
                             IconButton(
                               onPressed: () {
                                 showDialog(

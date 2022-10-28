@@ -7,22 +7,26 @@ import '../jeu_view.dart';
 class BouleBillardBlouse extends StatefulWidget {
   final Color color;
   final Color textColor;
+  final String textSnackBar;
   final int scoreBoule;
   final Equipe equipe1;
   final Equipe equipe2;
-  late Equipe equipeActive;
-  late Equipe equipeInactive;
+  final Equipe equipeInactive;
+  final Equipe equipeActive;
+  final onChange;
   final SimpleStack stack;
-  BouleBillardBlouse(
+  const BouleBillardBlouse(
       {super.key,
       required this.color,
       required this.scoreBoule,
       required this.equipe1,
       required this.equipe2,
-      required this.equipeActive,
-      required this.equipeInactive,
       required this.textColor,
-      required this.stack});
+      required this.stack,
+      required this.onChange,
+      required this.equipeInactive,
+      required this.textSnackBar,
+      required this.equipeActive});
 
   @override
   State<BouleBillardBlouse> createState() => _BouleBillardBlouseState();
@@ -39,22 +43,17 @@ class _BouleBillardBlouseState extends State<BouleBillardBlouse> {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 backgroundColor: widget.color,
                 content: Text(
-                  "Attention il faut remettre la boule si c'est une couleur",
+                  widget.textSnackBar,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
-                      color: widget.textColor, fontSize: 16),
+                      color: widget.textColor, fontSize: 22),
                 )));
             setState(() {
-              widget.equipeInactive.score += 4;
-              if (widget.equipeActive == widget.equipe1) {
-                widget.equipeActive = widget.equipe2;
-                widget.equipeInactive = widget.equipe1;
-              } else {
-                widget.equipeActive = widget.equipe1;
-                widget.equipeInactive = widget.equipe2;
-              }
+              widget.equipeInactive.score += widget.scoreBoule;
               widget.stack.modify([widget.equipe1.score, widget.equipe2.score]);
             });
+            widget.onChange(widget.equipe1, widget.equipe2, widget.equipeActive,
+                widget.equipeInactive);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: widget.color,

@@ -6,7 +6,10 @@ class DelayedAnimation extends StatefulWidget {
   final int delay;
   final double offsetFinal;
   const DelayedAnimation(
-      {required this.child, required this.delay, required this.offsetFinal});
+      {super.key,
+      required this.child,
+      required this.delay,
+      required this.offsetFinal});
 
   @override
   State<DelayedAnimation> createState() => _DelaydsAnimationState();
